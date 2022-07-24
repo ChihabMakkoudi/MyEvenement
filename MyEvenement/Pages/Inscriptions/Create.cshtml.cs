@@ -28,6 +28,9 @@ namespace MyEvenement.Pages.Inscriptions
         [BindProperty]
         public Inscription Inscription { get; set; }
 
+        [BindProperty]
+        public DetailInternational DetailInternational { get; set; }
+
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
@@ -35,7 +38,7 @@ namespace MyEvenement.Pages.Inscriptions
             {
                 return Page();
             }
-
+            Inscription.Detail = DetailInternational;
             _context.Inscription.Add(Inscription);
             await _context.SaveChangesAsync();
 

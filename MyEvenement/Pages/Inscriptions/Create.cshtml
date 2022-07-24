@@ -43,6 +43,7 @@
                 <input asp-for="Inscription.Telephone" class="form-control" />
                 <span asp-validation-for="Inscription.Telephone" class="text-danger"></span>
             </div>
+            @Html.EditorFor(model => model.DetailInternational)
             <div class="form-group">
                 <label asp-for="Inscription.EvenementID" class="control-label"></label>
                 <select asp-for="Inscription.EvenementID" class ="form-control" 
