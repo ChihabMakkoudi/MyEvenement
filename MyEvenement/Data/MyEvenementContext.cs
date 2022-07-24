@@ -14,8 +14,10 @@ namespace MyEvenement.Data
         {
         }
 
-        public DbSet<MyEvenement.Models.Evenement> Evenement { get; set; }
-
-        public DbSet<MyEvenement.Models.Inscription> Inscription { get; set; }
+        public DbSet<Evenement> Evenement { get; set; }
+        public DbSet<Inscription> Inscription { get; set; }
+        public DbSet<Detail> Detai { get; set; }
+        public DbSet<DetailNational> DetailNational { get; set; }
+        public DbSet<DetailInternational> DetailInternational { get; set; }
     }
 }

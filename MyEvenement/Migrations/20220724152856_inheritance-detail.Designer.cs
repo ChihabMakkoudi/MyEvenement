@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyEvenement.Data;
 
 namespace MyEvenement.Migrations
 {
     [DbContext(typeof(MyEvenementContext))]
-    partial class MyEvenementContextModelSnapshot : ModelSnapshot
+    [Migration("20220724152856_inheritance-detail")]
+    partial class inheritancedetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
