@@ -2,7 +2,7 @@
 {
     public abstract class Detail
     {
-        public int ID { get; set; }
+        public int DetailID { get; set; }
         public string Nationalite { get; set; }
         public string Pays { get; set; }
     }

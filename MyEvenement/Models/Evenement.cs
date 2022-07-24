@@ -8,6 +8,7 @@ namespace MyEvenement.Models
         public int ID { get; set; }
         public string Nom { get; set; }
         public string Text { get; set; }
+        public string TypeDetail { get; set; }
         public DateTime Date { get; set; }
 
         public ICollection<Inscription> Inscriptions { get; set; }

@@ -11,6 +11,9 @@
         public string Adress { get; set; }
         public string Telephone { get; set; }
 
+        public int DetailID { get; set; }
+        public Detail Detail { get; set; }
+
         public int EvenementID { get; set; }
         public Evenement Evenement { get; set; }
     }
