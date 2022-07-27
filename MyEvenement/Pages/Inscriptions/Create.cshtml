@@ -7,7 +7,7 @@
 
 <h1>Create</h1>
 
-<h4>Inscription</h4>
+<h4>Inscription @Html.DisplayFor(model => model.Evenement.Nom)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -43,7 +43,14 @@
                 <input asp-for="Inscription.Telephone" class="form-control" />
                 <span asp-validation-for="Inscription.Telephone" class="text-danger"></span>
             </div>
-            @Html.EditorFor(model => model.DetailInternational)
+            @if (Model.Evenement.TypeDetail.Equals("DetailInternational"))
+            {
+                @Html.EditorFor(model => model.DetailInternational, "DetailInternational")
+            }
+            else if(Model.Evenement.TypeDetail.Equals("DetailNational")){
+                @Html.EditorFor(model => model.DetailNational, "DetailNational")
+            }
+            <!--
             <div class="form-group">
                 <label asp-for="Inscription.EvenementID" class="control-label"></label>
                 <select asp-for="Inscription.EvenementID" class ="form-control" 
@@ -51,6 +58,7 @@
                     <option value="">-- Select Evenement --</option>
                 </select>
             </div>
+            -->
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

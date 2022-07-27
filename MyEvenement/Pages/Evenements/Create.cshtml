@@ -23,6 +23,21 @@
                 <input asp-for="Evenement.Text" class="form-control" />
                 <span asp-validation-for="Evenement.Text" class="text-danger"></span>
             </div>
+            <!--
+            <div class="form-group">
+                <label asp-for="Evenement.TypeDetail" class="control-label"></label>
+                <input asp-for="Evenement.TypeDetail" class="form-control" />
+                <span asp-validation-for="Evenement.TypeDetail" class="text-danger"></span>
+            </div>
+            -->
+
+            <div class="form-group">
+                <label asp-for="Evenement.TypeDetail" class="control-label"></label>
+                <select asp-for="Evenement.TypeDetail" class ="form-control" 
+                        asp-items="ViewBag.DetailOption">
+                    <option value="">-- Select Evenement --</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label asp-for="Evenement.Date" class="control-label"></label>
                 <input asp-for="Evenement.Date" class="form-control" />

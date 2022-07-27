@@ -21,6 +21,7 @@ namespace MyEvenement.Pages.Evenements
 
         public IActionResult OnGet()
         {
+            ViewData["DetailOption"] = new SelectList(new[] { "DetailNational", "DetailInternational"});
             return Page();
         }
 
