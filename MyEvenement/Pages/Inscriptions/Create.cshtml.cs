@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyEvenement.Authorization;
 using MyEvenement.Data;
 using MyEvenement.Models;
 
 namespace MyEvenement.Pages.Inscriptions
 {
-    public class CreateModel : PageModel
+    public class CreateModel : DI_BasePageModel
     {
-        private readonly MyEvenement.Data.MyEvenementContext _context;
+        //private readonly MyEvenement.Data.MyEvenementContext _context;
 
-        public CreateModel(MyEvenement.Data.MyEvenementContext context)
+        public CreateModel(
+            MyEvenementContext context,
+            IAuthorizationService authorizationService,
+            UserManager<AppUser> userManager)
+            : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -57,6 +63,7 @@ namespace MyEvenement.Pages.Inscriptions
             {
                 return Page();
             }
+
             var evenement = await _context.Evenement.FirstOrDefaultAsync(m => m.ID == Evenement.ID);
             if (evenement.TypeDetail.Equals("DetailInternational"))
             {
@@ -67,6 +74,18 @@ namespace MyEvenement.Pages.Inscriptions
                 Inscription.Detail = DetailNational;
             }
             Inscription.EvenementID = Evenement.ID;
+
+            Inscription.OwnerID = UserManager.GetUserId(User);
+
+            // requires using ContactManager.Authorization;
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                        User, Inscription,
+                                                        InscriptionOperations.Create);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             _context.Inscription.Add(Inscription);
             await _context.SaveChangesAsync();
 

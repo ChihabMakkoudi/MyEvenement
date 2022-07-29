@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using MyEvenement.Models;
 
 namespace MyEvenement.Data
 {
@@ -12,6 +13,9 @@ namespace MyEvenement.Data
         public string Nom { get; set; }
 
         public string Prenom { get; set; }
+
+        public int DetailID { get; set; }
+        public Detail Detail { get; set; }
 
     }
 }

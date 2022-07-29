@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyEvenement.Data;
 
 namespace MyEvenement.Migrations
 {
     [DbContext(typeof(MyEvenementContext))]
-    partial class MyEvenementContextModelSnapshot : ModelSnapshot
+    [Migration("20220728121705_add_status_UserRef_Inscription")]
+    partial class add_status_UserRef_Inscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

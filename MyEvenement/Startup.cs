@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyEvenement.Authorization;
 using MyEvenement.Data;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,23 @@ namespace MyEvenement
 
             services.AddDbContext<MyEvenementContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MyEvenementContext")));
+            
+            
+            // Authorization handlers.
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+            services.AddScoped<IAuthorizationHandler,
+                                  InscriptionIsOwnerAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler,
+                                  AdministratorsAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler,
+                                  ManagerAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

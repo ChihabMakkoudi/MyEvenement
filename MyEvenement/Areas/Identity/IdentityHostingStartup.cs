@@ -21,6 +21,7 @@ namespace MyEvenement.Areas.Identity
                         context.Configuration.GetConnectionString("MyEvenementContext")));
 
                 services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<MyEvenementContext>();
             });
         }

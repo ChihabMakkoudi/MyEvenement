@@ -34,6 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Inscription[0].Evenement)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inscription[0].Status)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -62,11 +65,28 @@
                 @Html.DisplayFor(modelItem => item.Evenement.Nom)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.InscriptionID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.InscriptionID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.InscriptionID">Delete</a>
-            </td>
-        </tr>
-}
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if ((await AuthorizationService.AuthorizeAsync(
+                     User, item,
+                     InscriptionOperations.Update)).Succeeded)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.InscriptionID">Edit</a>
+                        <text> | </text>
+                    }
+
+                    <a asp-page="./Details" asp-route-id="@item.InscriptionID">Details</a>
+
+                    @if ((await AuthorizationService.AuthorizeAsync(
+                     User, item,
+                     InscriptionOperations.Delete)).Succeeded)
+                    {
+                        <text> | </text>
+                        <a asp-page="./Delete" asp-route-id="@item.InscriptionID">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

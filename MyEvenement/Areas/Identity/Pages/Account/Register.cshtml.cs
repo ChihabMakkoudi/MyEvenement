@@ -12,8 +12,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyEvenement.Data;
+using MyEvenement.Models;
 
 namespace MyEvenement.Areas.Identity.Pages.Account
 {
@@ -24,21 +26,33 @@ namespace MyEvenement.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly MyEvenementContext _context;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            MyEvenementContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        [BindProperty]
+        public Evenement Evenement { get; set; }
+
+        [BindProperty]
+        public DetailInternational DetailInternational { get; set; }
+
+        [BindProperty]
+        public DetailNational DetailNational { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -76,6 +90,14 @@ namespace MyEvenement.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+
+            var evenement = await _context.Evenement.FirstOrDefaultAsync(m => m.ID == 6);
+            if (evenement == null)
+            {
+                Console.WriteLine("not found");
+            }
+            Evenement = evenement;
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -90,6 +112,17 @@ namespace MyEvenement.Areas.Identity.Pages.Account
                 //TO DO correct this
                 user.Nom = Input.Nom;
                 user.Prenom = Input.Prenom;
+
+                /*var evenement = await _context.Evenement.FirstOrDefaultAsync(m => m.ID == Evenement.ID);
+                if (evenement.TypeDetail.Equals("DetailInternational"))
+                {
+                    Inscription.Detail = DetailInternational;
+                }
+                else if (evenement.TypeDetail.Equals("DetailNational"))
+                {
+                    Inscription.Detail = DetailNational;
+                }
+                Inscription.EvenementID = Evenement.ID;*/
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

@@ -1,5 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using MyEvenement
 @using MyEvenement.Data
+@using MyEvenement.Authorization;
+@using Microsoft.AspNetCore.Authorization
+@using MyEvenement.Models
+@inject IAuthorizationService AuthorizationService
 @namespace MyEvenement.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

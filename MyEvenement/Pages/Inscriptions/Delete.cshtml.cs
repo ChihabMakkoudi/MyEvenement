@@ -2,22 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using MyEvenement.Authorization;
 using MyEvenement.Data;
 using MyEvenement.Models;
 
 namespace MyEvenement.Pages.Inscriptions
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : DI_BasePageModel
     {
-        private readonly MyEvenement.Data.MyEvenementContext _context;
+        //private readonly MyEvenement.Data.MyEvenementContext _context;
 
-        public DeleteModel(MyEvenement.Data.MyEvenementContext context)
+        public DeleteModel(
+        MyEvenementContext context,
+        IAuthorizationService authorizationService,
+        UserManager<AppUser> userManager)
+        : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
+
 
         [BindProperty]
         public Inscription Inscription { get; set; }
@@ -36,6 +43,18 @@ namespace MyEvenement.Pages.Inscriptions
             {
                 return NotFound();
             }
+
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                     User, Inscription,
+                                                     InscriptionOperations.Delete);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+
+
+
             return Page();
         }
 
@@ -51,11 +70,24 @@ namespace MyEvenement.Pages.Inscriptions
                 .Include(c => c.Evenement)
                 .FirstOrDefaultAsync(m => m.InscriptionID == id);
 
-            if (Inscription != null)
+            if (Inscription == null)
             {
-                _context.Inscription.Remove(Inscription);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
+
+
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                 User, Inscription,
+                                                 InscriptionOperations.Delete);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+
+
+            _context.Inscription.Remove(Inscription);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
