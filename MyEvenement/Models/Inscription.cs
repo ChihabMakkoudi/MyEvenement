@@ -16,5 +16,7 @@
 
         public int EvenementID { get; set; }
         public Evenement Evenement { get; set; }
+
+        public string OwnerID { get; set; }
     }
 }

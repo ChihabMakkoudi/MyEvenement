@@ -12,8 +12,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyEvenement.Data;
+using MyEvenement.Models;
 
 namespace MyEvenement.Areas.Identity.Pages.Account
 {
@@ -24,21 +26,27 @@ namespace MyEvenement.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly MyEvenementContext _context;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            MyEvenementContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        [BindProperty]
+        public InscriptionDetail InscriptionDetail { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -76,6 +84,10 @@ namespace MyEvenement.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+
+            InscriptionDetail = new(_context);
+            await InscriptionDetail.SetEvent(6);
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -94,6 +106,12 @@ namespace MyEvenement.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    InscriptionDetail._context = _context;
+                    await InscriptionDetail.RegisterInscription(user.Id);
+                    
+                    //make admin
+                    //result = await _userManager.AddToRolesAsync(user, new[] { "Administrators" });
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -1,0 +1,41 @@
+﻿@model MyEvenement.Models.InscriptionDetail
+
+<input type="hidden" asp-for="Evenement.ID" />
+<input type="hidden" asp-for="Evenement.TypeDetail" />
+<div class="form-group">
+    <label asp-for="Inscription.Nom" class="control-label"></label>
+    <input asp-for="Inscription.Nom" class="form-control" />
+    <span asp-validation-for="Inscription.Nom" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Inscription.Prenom" class="control-label"></label>
+    <input asp-for="Inscription.Prenom" class="form-control" />
+    <span asp-validation-for="Inscription.Prenom" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Inscription.Email" class="control-label"></label>
+    <input asp-for="Inscription.Email" class="form-control" />
+    <span asp-validation-for="Inscription.Email" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Inscription.Nationalite" class="control-label"></label>
+    <input asp-for="Inscription.Nationalite" class="form-control" />
+    <span asp-validation-for="Inscription.Nationalite" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Inscription.Adress" class="control-label"></label>
+    <input asp-for="Inscription.Adress" class="form-control" />
+    <span asp-validation-for="Inscription.Adress" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Inscription.Telephone" class="control-label"></label>
+    <input asp-for="Inscription.Telephone" class="form-control" />
+    <span asp-validation-for="Inscription.Telephone" class="text-danger"></span>
+</div>
+@if (Model.Evenement.TypeDetail.Equals("DetailInternational"))
+{
+    @Html.EditorFor(model => model.DetailInternational, "DetailInternational")
+}
+else if(Model.Evenement.TypeDetail.Equals("DetailNational")){
+    @Html.EditorFor(model => model.DetailNational, "DetailNational")
+}
