@@ -40,7 +40,10 @@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
+                <form method="post">
+                    <input asp-route-id="@item.ID" type="submit" value="set as current event" class="btn btn-danger" />
+                </form>
             </td>
         </tr>
 }

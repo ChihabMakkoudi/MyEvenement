@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyEvenement.Data;
 using MyEvenement.Models;
+using MyEvenement.Utils;
 
 namespace MyEvenement.Areas.Identity.Pages.Account
 {
@@ -84,9 +85,9 @@ namespace MyEvenement.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-
+            var eventid = ConfigData.GetConfigData_Json().Current_Event_Id;
             InscriptionDetail = new(_context);
-            await InscriptionDetail.SetEvent(6);
+            await InscriptionDetail.SetEvent(eventid);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }

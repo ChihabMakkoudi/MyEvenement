@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEvenement.Data;
 using MyEvenement.Models;
+using MyEvenement.Utils;
 
 namespace MyEvenement.Pages.Evenements
 {
@@ -24,6 +25,28 @@ namespace MyEvenement.Pages.Evenements
         public async Task OnGetAsync()
         {
             Evenement = await _context.Evenement.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Evenement Evenement = await _context.Evenement.FindAsync(id);
+
+            if (Evenement != null)
+            {
+                ConfigData data = new ConfigData()
+                {
+                    Current_Event_Id = Evenement.ID,
+                    Current_Event_Name = Evenement.Nom
+                };
+                data.SaveJson();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

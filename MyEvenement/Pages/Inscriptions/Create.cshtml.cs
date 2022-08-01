@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyEvenement.Data;
 using MyEvenement.Models;
+using MyEvenement.Utils;
 
 namespace MyEvenement.Pages.Inscriptions
 {
@@ -20,8 +21,9 @@ namespace MyEvenement.Pages.Inscriptions
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
+            int id = ConfigData.GetConfigData_Json().Current_Event_Id;
             if (id == null || _context.Evenement == null)
             {
                 return NotFound();

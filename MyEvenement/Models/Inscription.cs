@@ -1,4 +1,6 @@
-﻿namespace   MyEvenement.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace   MyEvenement.Models
 {
     public class Inscription
     {
