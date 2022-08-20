@@ -10,8 +10,8 @@ using MyEvenement.Data;
 namespace MyEvenement.Migrations
 {
     [DbContext(typeof(MyEvenementContext))]
-    [Migration("20220729210025_testing_detail_in_user")]
-    partial class testing_detail_in_user
+    [Migration("20220801104813_adding_profile_pic")]
+    partial class adding_profile_pic
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -205,6 +205,9 @@ namespace MyEvenement.Migrations
                     b.Property<string>("Prenom")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

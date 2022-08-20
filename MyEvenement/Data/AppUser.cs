@@ -13,5 +13,7 @@ namespace MyEvenement.Data
 
         public string Prenom { get; set; }
 
+        public byte[] ProfilePicture { get; set; }
+
     }
 }

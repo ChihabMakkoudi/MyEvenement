@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -80,6 +82,9 @@ namespace MyEvenement.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            //[FileExtensions(Extensions = "jpg,jpeg,png,pdf")]
+            public byte[] ProfilePicture { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -99,7 +104,23 @@ namespace MyEvenement.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new AppUser { UserName = Input.Email, Email = Input.Email };
-                
+                //
+                /*long length = Input.ProfilePicture.Length;
+                if (length < 0)
+                    return BadRequest();
+
+                using var fileStream = Input.ProfilePicture.OpenReadStream();
+                user.ProfilePicture = new byte[length];
+                fileStream.Read(user.ProfilePicture, 0, (int)Input.ProfilePicture.Length);*/
+                //
+                var file = Request.Form.Files["Input.ProfilePicture"];
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    user.ProfilePicture = memoryStream.ToArray();
+                }
+                //user.ProfilePicture = Input.ProfilePicture;
+                System.Console.WriteLine(Input.ProfilePicture);
                 //TO DO correct this
                 user.Nom = Input.Nom;
                 user.Prenom = Input.Prenom;
