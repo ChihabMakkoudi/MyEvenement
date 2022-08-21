@@ -1,10 +1,58 @@
 ﻿@page
 @model IndexModel
+@inject UserManager<AppUser> UserManager
+@inject SignInManager<AppUser> SignInManager
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <!--
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    -->
+    <div>
+    <h4>Evenement</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Evenement.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Evenement.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Evenement.Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Evenement.Text)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Evenement.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Evenement.Date)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+            <a class="btn btn-primary" asp-area=""  asp-page="/Inscriptions/Details">voir inscription</a>
+        <!--
+
+        <form action="" method="post">
+        </form>
+         <form method="post">
+            <input type="hidden" asp-for="@UserManager.GetUserAsync(User).Result.Id" />
+            <input type="submit" value="voir inscription" class="btn btn-primary"/>
+        </form>
+        -->
+    }
+    else
+    {
+    <a type="button" class="btn btn-primary" asp-area="Identity"  asp-page="/Account/Register">Inscription</a>
+            
+    }
+</div>
 </div>

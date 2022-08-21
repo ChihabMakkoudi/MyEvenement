@@ -14,9 +14,9 @@ namespace MyEvenement.Pages.Inscriptions
 {
     public class CreateModel : PageModel
     {
-        private readonly MyEvenement.Data.MyEvenementContext _context;
+        private readonly MyEvenementContext _context;
 
-        public CreateModel(MyEvenement.Data.MyEvenementContext context)
+        public CreateModel(MyEvenementContext context)
         {
             _context = context;
         }

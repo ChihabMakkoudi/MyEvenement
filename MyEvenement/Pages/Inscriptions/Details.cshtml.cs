@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace MyEvenement.Pages.Inscriptions
     public class DetailsModel : PageModel
     {
         private readonly MyEvenement.Data.MyEvenementContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public DetailsModel(MyEvenement.Data.MyEvenementContext context)
+        public DetailsModel(MyEvenement.Data.MyEvenementContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public Inscription Inscription { get; set; }
@@ -25,7 +28,14 @@ namespace MyEvenement.Pages.Inscriptions
         {
             if (id == null)
             {
-                return NotFound();
+                var userid = _userManager.GetUserAsync(User).Result.Id;
+                Console.WriteLine(userid);
+                Inscription = await _context.Inscription.FirstOrDefaultAsync(m => m.OwnerID == userid);
+                if (Inscription == null)
+                {
+                    return NotFound();
+                }
+                return Page();
             }
 
             Inscription = await _context.Inscription
