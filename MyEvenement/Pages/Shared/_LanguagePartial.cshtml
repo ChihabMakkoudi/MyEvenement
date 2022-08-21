@@ -1,0 +1,11 @@
+﻿<div class="dropdown">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img style="height:20px" src="/img/lang.png"/> Language
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item"><a asp-controller="Home" asp-action="ChangeLanguage" asp-route-culture="fr" class="nav-link"><img style="height:20px" src="/img/fr.svg"/> Français</a></a>
+    <a class="dropdown-item"><a asp-controller="Home" asp-action="ChangeLanguage" asp-route-culture="ar" class="nav-link"><img style="height:20px" src="/img/ma.svg"/> Arabe</a></a>
+    <a class="dropdown-item"><a asp-controller="Home" asp-action="ChangeLanguage" asp-route-culture="en" class="nav-link"><img style="height:20px" src="/img/gb.svg"/> English</a></a>
+  </div>
+</div>
+
