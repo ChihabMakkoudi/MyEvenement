@@ -48,6 +48,12 @@ namespace MyEvenement.Pages
             }
             Evenement = evenement;
 
+            /*MailSender mailSender = new("testsender420@yahoo.com",      // to
+                                        "testsender420@outlook.com",    // from
+                                        "final test",     // subject
+                                        "this mail is sent automaticaly by using asp.net and smtp"      //body
+                                        );
+            mailSender.send();*/
             // ViewData["EvenementID"] = new SelectList(_context.Evenement, "ID", "Nom");
             return Page();
         }
