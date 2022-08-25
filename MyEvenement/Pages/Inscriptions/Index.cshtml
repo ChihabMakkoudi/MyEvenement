@@ -34,6 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Inscription[0].Evenement)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inscription[0].Statut)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -60,6 +63,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Evenement.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Statut.StatutName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.InscriptionID">Edit</a> |

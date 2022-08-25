@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyEvenement.Data;
 
 namespace MyEvenement.Migrations
 {
     [DbContext(typeof(MyEvenementContext))]
-    partial class MyEvenementContextModelSnapshot : ModelSnapshot
+    [Migration("20220824232446_Adding_statut")]
+    partial class Adding_statut
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,7 +311,7 @@ namespace MyEvenement.Migrations
                     b.Property<string>("Prenom")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatutID")
+                    b.Property<int?>("StatutID")
                         .HasColumnType("int");
 
                     b.Property<string>("Telephone")
@@ -431,9 +433,7 @@ namespace MyEvenement.Migrations
 
                     b.HasOne("MyEvenement.Models.Statut", "Statut")
                         .WithMany()
-                        .HasForeignKey("StatutID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatutID");
 
                     b.Navigation("Detail");
 

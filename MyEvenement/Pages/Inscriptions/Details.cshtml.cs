@@ -30,7 +30,10 @@ namespace MyEvenement.Pages.Inscriptions
             {
                 var userid = _userManager.GetUserAsync(User).Result.Id;
                 Console.WriteLine(userid);
-                Inscription = await _context.Inscription.FirstOrDefaultAsync(m => m.OwnerID == userid);
+                Inscription = await _context.Inscription
+                                            .Include(c => c.Evenement)
+                                            .Include(c => c.Statut)
+                                            .FirstOrDefaultAsync(m => m.OwnerID == userid);
                 if (Inscription == null)
                 {
                     return NotFound();
@@ -41,6 +44,7 @@ namespace MyEvenement.Pages.Inscriptions
             Inscription = await _context.Inscription
                 .AsNoTracking()
                 .Include(c => c.Evenement)
+                .Include(c => c.Statut)
                 .FirstOrDefaultAsync(m => m.InscriptionID == id);
 
             if (Inscription == null)

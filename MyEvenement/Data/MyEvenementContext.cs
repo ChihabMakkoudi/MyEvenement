@@ -21,6 +21,7 @@ namespace MyEvenement.Data
         public DbSet<Detail> Detai { get; set; }
         public DbSet<DetailNational> DetailNational { get; set; }
         public DbSet<DetailInternational> DetailInternational { get; set; }
+        public DbSet<Statut> Statut { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

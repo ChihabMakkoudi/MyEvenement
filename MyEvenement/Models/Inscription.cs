@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace   MyEvenement.Models
+﻿namespace   MyEvenement.Models
 {
     public class Inscription
     {
@@ -12,6 +10,10 @@ namespace   MyEvenement.Models
         public string Nationalite { get; set; }
         public string Adress { get; set; }
         public string Telephone { get; set; }
+
+
+        public int StatutID { get; set; }
+        public Statut Statut { get; set; }
 
         public int DetailID { get; set; }
         public Detail Detail { get; set; }

@@ -53,6 +53,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Inscription.Evenement.Nom)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Inscription.Statut)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Inscription.Statut.StatutName)
+        </dd>
     </dl>
 </div>
 <div>

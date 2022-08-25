@@ -69,6 +69,7 @@ namespace MyEvenement.Pages.Inscriptions
                 Inscription.Detail = DetailNational;
             }
             Inscription.EvenementID = Evenement.ID;
+            Inscription.Statut = await _context.Statut.FirstOrDefaultAsync(m => m.StatutName == "En attente de validation");
             _context.Inscription.Add(Inscription);
             await _context.SaveChangesAsync();
 

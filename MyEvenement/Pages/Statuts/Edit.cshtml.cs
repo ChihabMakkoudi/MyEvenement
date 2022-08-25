@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using MyEvenement.Data;
 using MyEvenement.Models;
 
-namespace MyEvenement.Pages.Inscriptions
+namespace MyEvenement.Pages.Statuts
 {
     public class EditModel : PageModel
     {
@@ -21,24 +21,21 @@ namespace MyEvenement.Pages.Inscriptions
         }
 
         [BindProperty]
-        public Inscription Inscription { get; set; }
+        public Statut Statut { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Inscription == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var inscription =  await _context.Inscription.FirstOrDefaultAsync(m => m.InscriptionID == id);
-            if (inscription == null)
+            Statut = await _context.Statut.FirstOrDefaultAsync(m => m.StatutID == id);
+
+            if (Statut == null)
             {
                 return NotFound();
             }
-            Inscription = inscription;
-            ViewData["EvenementID"] = new SelectList(_context.Evenement, "ID", "Nom");
-            ViewData["StatutID"] = new SelectList(_context.Statut, "StatutID", "StatutName");
-
             return Page();
         }
 
@@ -51,7 +48,7 @@ namespace MyEvenement.Pages.Inscriptions
                 return Page();
             }
 
-            _context.Attach(Inscription).State = EntityState.Modified;
+            _context.Attach(Statut).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +56,7 @@ namespace MyEvenement.Pages.Inscriptions
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!InscriptionExists(Inscription.InscriptionID))
+                if (!StatutExists(Statut.StatutID))
                 {
                     return NotFound();
                 }
@@ -72,9 +69,9 @@ namespace MyEvenement.Pages.Inscriptions
             return RedirectToPage("./Index");
         }
 
-        private bool InscriptionExists(int id)
+        private bool StatutExists(int id)
         {
-            return _context.Inscription.Any(e => e.InscriptionID == id);
+            return _context.Statut.Any(e => e.StatutID == id);
         }
     }
 }

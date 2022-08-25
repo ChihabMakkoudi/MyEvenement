@@ -14,6 +14,8 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Inscription.InscriptionID" />
+            <input type="hidden" asp-for="Inscription.DetailID" />
+            <input type="hidden" asp-for="Inscription.OwnerID" />
             <div class="form-group">
                 <label asp-for="Inscription.Nom" class="control-label"></label>
                 <input asp-for="Inscription.Nom" class="form-control" />
@@ -51,6 +53,14 @@
                     <option value="">-- Select Evenement --</option>
                 </select>
                 <span asp-validation-for="Inscription.EvenementID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inscription.StatutID" class="control-label"></label>
+                <select asp-for="Inscription.StatutID" class="form-control" 
+                        asp-items="ViewBag.StatutID">
+                    <option value="">-- Select Evenement --</option>
+                </select>
+                <span asp-validation-for="Inscription.StatutID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
