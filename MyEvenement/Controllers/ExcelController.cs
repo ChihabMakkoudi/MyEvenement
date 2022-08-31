@@ -25,7 +25,9 @@ namespace MyEvenement.Controllers
 
         public IActionResult Index()
         {
-            var inscriptions = GetInscriptionList();
+            var inscriptions = _context.Inscription
+                .Include(i => i.Evenement)
+                .Include(i => i.Statut).ToList();
 
             return View(inscriptions);
         }
