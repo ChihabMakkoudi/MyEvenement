@@ -119,11 +119,14 @@ namespace MyEvenement.Areas.Identity.Pages.Account
                     await file.CopyToAsync(memoryStream);
                     user.ProfilePicture = memoryStream.ToArray();
                 }
-                //user.ProfilePicture = Input.ProfilePicture;
-                System.Console.WriteLine(Input.ProfilePicture);
                 //TO DO correct this
                 user.Nom = Input.Nom;
                 user.Prenom = Input.Prenom;
+
+                // piece jointe 
+                var file2 = Request.Form.Files["InscriptionDetail.PieceJointe"];
+                InscriptionDetail.Inscription.FileDocument = new();
+                await InscriptionDetail.Inscription.FileDocument.Set(file2);
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

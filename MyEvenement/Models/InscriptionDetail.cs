@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MyEvenement.Data;
 using System;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace MyEvenement.Models
         public Inscription Inscription { get; set; }
 
         public Evenement Evenement { get; set; }
+
+        public IFormFile PieceJointe { get; set; }
 
         public DetailInternational DetailInternational { get; set; }
 

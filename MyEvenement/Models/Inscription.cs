@@ -18,6 +18,9 @@
         public int DetailID { get; set; }
         public Detail Detail { get; set; }
 
+        public int? FileDocumentID { get; set; }
+        public FileDocument FileDocument { get; set; }
+
         public int EvenementID { get; set; }
         public Evenement Evenement { get; set; }
 

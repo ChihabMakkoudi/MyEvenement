@@ -32,6 +32,16 @@
     <input asp-for="Inscription.Telephone" class="form-control" />
     <span asp-validation-for="Inscription.Telephone" class="text-danger"></span>
 </div>
+<div class="form-group">
+    <label asp-for="PieceJointe" style="width: 100%;">Piece Jointe</label>
+   <!--
+
+    accept=".png,.jpg,.jpeg,.gif,.tif"
+    --> 
+    <input type="file" asp-for="PieceJointe"/>
+
+    <span asp-validation-for="PieceJointe" class="text-danger"></span>
+</div>
 @if (Model.Evenement.TypeDetail.Equals("DetailInternational"))
 {
     @Html.EditorFor(model => model.DetailInternational, "DetailInternational")
